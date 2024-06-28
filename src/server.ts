@@ -1,27 +1,19 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import userRoutes from "./userRoutes";
+import postsRoutes from "./postRoutes";
 
 const app = express();
 const PORT = 1060;
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  console.log("hello there");
-  res.json("hello there");
+app.get("/", (_req, res) => {
+  res.json({ message: "This is the root route" });
 });
 
-app.get("/users", async (req, res) => {
-  try {
-    const users = await prisma.user.findMany();
-    res.json(users);
-  } catch (err) {
-    console.log(err);
-  }
-});
+app.use(userRoutes);
+app.use(postsRoutes);
 
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
 });

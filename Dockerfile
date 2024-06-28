@@ -9,6 +9,7 @@ RUN npm install
 COPY . .
 EXPOSE 1060
 
+RUN npx prisma generate
+
 CMD [ "npm", "run", "dev" ]
 
-RUN npx prisma generate
